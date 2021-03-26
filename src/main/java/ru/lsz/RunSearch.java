@@ -2,7 +2,6 @@ package ru.lsz;
 
 import java.io.IOException;
 import java.net.InetAddress;
-import java.net.UnknownHostException;
 
 public class RunSearch implements Runnable {
     String hosts;
@@ -15,7 +14,7 @@ public class RunSearch implements Runnable {
         this.count = count;
     }
 
-    public void checkHosts(String subnet) throws UnknownHostException, IOException{
+    public void checkHosts(String subnet) throws IOException{
         int timeout=1000;
 
         for (int i = begin; i < count ; i++){
