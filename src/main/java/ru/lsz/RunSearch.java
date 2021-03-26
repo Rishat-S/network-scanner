@@ -21,7 +21,9 @@ public class RunSearch implements Runnable {
         for (int i = begin; i < count ; i++){
             String host = subnet + "." + i;
             if (InetAddress.getByName(host).isReachable(timeout)){
-                System.out.println(host + " is reachable");
+                System.out.printf("%-15s is reachable\n", host);
+            } else {
+                System.err.printf("%-15s is free\n", host);
             }
         }
     }
