@@ -2,7 +2,7 @@ package ru.lsz;
 
 public class App {
 
-    public static final String HOSTS = "192.168.0";
+    public static final String HOSTS = "192.168.70";
     public static final int THREAD_COUNT = 25;
 
     public static void main(String[] args) {
