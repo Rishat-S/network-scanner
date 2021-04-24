@@ -9,7 +9,6 @@ import org.apache.http.impl.client.HttpClientBuilder;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -22,7 +21,7 @@ public class BingApiResponse {
     static ObjectMapper mapper = new ObjectMapper();
     public static final String URI = "https://bing.biturl.top/";
 
-    public static void main(String[] args) {
+    public static String getHttpClient() {
         CloseableHttpClient httpClient = HttpClientBuilder.create()
                 .setDefaultRequestConfig(RequestConfig.custom()
                         .setConnectTimeout(5000)
@@ -34,16 +33,31 @@ public class BingApiResponse {
         HttpGet request = new HttpGet(URI);
 
         try (CloseableHttpResponse response = httpClient.execute(request)) {
+
             ApiBingWallPaper apiBingWallPaper = mapper.readValue(response.getEntity().getContent(), ApiBingWallPaper.class);
+
+            return apiBingWallPaper.getUrl();
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        return null;
+
     }
 
-    private static void saveImageToFile(String url, String pathToPastImage) throws MalformedURLException {
+    public static void saveImageToFile(String url, String compName) {
+        final String SCREENSAVER_DOMINANT_SCREEN_SAVER_JPG = "\\C$\\screensaver\\DominantScreenSaver.jpg";
+        String[] name = compName.split("\\.");
+        String pathToPastImage = "\\\\" + name[0] + SCREENSAVER_DOMINANT_SCREEN_SAVER_JPG;
+
+        System.out.println();
+        System.out.println(pathToPastImage); // FIXME:
+
         try (InputStream in = new URL(url).openStream()) {
+
             Files.copy(in, Paths.get(pathToPastImage), StandardCopyOption.REPLACE_EXISTING);
+
         } catch (Exception e) {
             e.printStackTrace();
         }

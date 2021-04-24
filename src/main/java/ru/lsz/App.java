@@ -1,5 +1,7 @@
 package ru.lsz;
 
+import ru.lsz.bing.BingApiResponse;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
@@ -24,10 +26,10 @@ public class App {
 
         TimeUnit.SECONDS.sleep(TIMEOUT);
 
-        COMPUTERS.values().stream()
-                .sorted()
-                .forEach(System.out::println);
 
+        String uri = BingApiResponse.getHttpClient();
+
+        COMPUTERS.values().forEach(compName -> BingApiResponse.saveImageToFile(uri, compName));
 
     }
 }
