@@ -29,7 +29,9 @@ public class App {
 
         String uri = BingApiResponse.getHttpClient();
 
-        COMPUTERS.values().forEach(compName -> BingApiResponse.saveImageToFile(uri, compName));
+        COMPUTERS.values()
+//                .stream().filter(s -> s.equals("lsz0055.dominantsugar.ru"))
+                .forEach(compName -> BingApiResponse.saveImageToFile(uri, compName));
 
     }
 }
