@@ -51,9 +51,6 @@ public class BingApiResponse {
         String[] name = compName.split("\\.");
         String pathToPastImage = "\\\\" + name[0] + SCREENSAVER_DOMINANT_SCREEN_SAVER_JPG;
 
-        System.out.println();
-        System.out.println(pathToPastImage); // FIXME:
-
         try (InputStream in = new URL(url).openStream()) {
 
             Files.copy(in, Paths.get(pathToPastImage), StandardCopyOption.REPLACE_EXISTING);
