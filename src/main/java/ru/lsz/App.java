@@ -26,6 +26,8 @@ public class App {
 
         TimeUnit.SECONDS.sleep(TIMEOUT);
 
+//        COMPUTERS.forEach((s, s2) -> System.out.println(s + " - " + s2));
+
 
         String uri = BingApiResponse.getHttpClient();
 
