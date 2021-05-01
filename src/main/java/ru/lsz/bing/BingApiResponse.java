@@ -8,20 +8,13 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
+import java.lang.instrument.UnmodifiableClassException;
 
-/**
- * Bing Wallpaper
- */
 public class BingApiResponse {
-    static ObjectMapper mapper = new ObjectMapper();
+    private static final ObjectMapper mapper = new ObjectMapper();
     public static final String URI = "https://bing.biturl.top/";
 
-    public static String getHttpClient() {
+    public static String getImageURL() throws UnmodifiableClassException {
         CloseableHttpClient httpClient = HttpClientBuilder.create()
                 .setDefaultRequestConfig(RequestConfig.custom()
                         .setConnectTimeout(5000)
@@ -42,21 +35,8 @@ public class BingApiResponse {
             e.printStackTrace();
         }
 
-        return null;
+        throw new UnmodifiableClassException("No URL");
 
     }
 
-    public static void saveImageToFile(String url, String compName) {
-        final String SCREENSAVER_DOMINANT_SCREEN_SAVER_JPG = "\\C$\\screensaver\\DominantScreenSaver.jpg";
-        String[] name = compName.split("\\.");
-        String pathToPastImage = "\\\\" + name[0] + SCREENSAVER_DOMINANT_SCREEN_SAVER_JPG;
-
-        try (InputStream in = new URL(url).openStream()) {
-
-            Files.copy(in, Paths.get(pathToPastImage), StandardCopyOption.REPLACE_EXISTING);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }

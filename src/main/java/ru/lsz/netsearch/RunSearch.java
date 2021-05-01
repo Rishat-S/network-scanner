@@ -1,4 +1,4 @@
-package ru.lsz;
+package ru.lsz.netsearch;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -6,6 +6,8 @@ import java.net.InetAddress;
 import static ru.lsz.App.COMPUTERS;
 
 public class RunSearch implements Runnable {
+    public static final String LSZ = "lsz";
+    public static final String LSZ1 = "lsz-";
     String hosts;
     int begin;
     int count;
@@ -17,7 +19,7 @@ public class RunSearch implements Runnable {
     }
 
     private void putToMapComputers(String host, String  hostName) {
-        if (hostName.startsWith("lsz") && !hostName.startsWith("lsz-")) {
+        if (hostName.startsWith(LSZ) && !hostName.startsWith(LSZ1)) {
             COMPUTERS.put(host, hostName);
         }
     }

@@ -1,7 +1,10 @@
 package ru.lsz;
 
 import ru.lsz.bing.BingApiResponse;
+import ru.lsz.netsearch.RunSearch;
+import ru.lsz.safefile.SafeFile;
 
+import java.lang.instrument.UnmodifiableClassException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
@@ -13,7 +16,7 @@ public class App {
     public static final int THREAD_COUNT = 50;
     public static final int TIMEOUT = 35;
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, UnmodifiableClassException {
 
         int index;
         final int range = 250 / THREAD_COUNT;
@@ -26,14 +29,11 @@ public class App {
 
         TimeUnit.SECONDS.sleep(TIMEOUT);
 
-//        COMPUTERS.forEach((s, s2) -> System.out.println(s + " - " + s2));
-
-
-        String uri = BingApiResponse.getHttpClient();
+        String imageURL = BingApiResponse.getImageURL();
 
         COMPUTERS.values()
-//                .stream().filter(s -> s.equals("lsz0055.dominantsugar.ru"))
-                .forEach(compName -> BingApiResponse.saveImageToFile(uri, compName));
+                .stream().filter(s -> s.equals("lsz0055.dominantsugar.ru"))
+                .forEach(compName -> SafeFile.saveImageToFile(imageURL, compName));
 
     }
 }
