@@ -3,7 +3,9 @@ package ru.lsz;
 import ru.lsz.bing.BingApiResponse;
 import ru.lsz.netsearch.RunSearch;
 import ru.lsz.safefile.SafeFile;
+import ru.lsz.safefile.WriteToCSV;
 
+import java.io.IOException;
 import java.lang.instrument.UnmodifiableClassException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -29,11 +31,27 @@ public class App {
 
         TimeUnit.SECONDS.sleep(TIMEOUT);
 
-        String imageURL = BingApiResponse.getImageURL();
+        WriteToCSV.ToCSV(COMPUTERS);
 
-        COMPUTERS.values()
-                .stream().filter(s -> s.equals("lsz0055.dominantsugar.ru"))
-                .forEach(compName -> SafeFile.saveImageToFile(imageURL, compName));
+//        String imageURL = BingApiResponse.getImageURL();
+
+//        COMPUTERS.values().stream()
+//                .sorted()
+//                .forEach(System.out::println);
+
+//        COMPUTERS.values()
+//                .stream().filter(s -> s.equals("lsz0055.dominantsugar.ru"))
+//                .forEach(compName -> SafeFile.saveImageToFile(imageURL, compName));
+
+//        COMPUTERS.values()
+////                .stream().filter(s -> s.equals("lsz0055.dominantsugar.ru"))
+//                .forEach(compName -> {
+//                    try {
+//                        SafeFile.copyFileUsingStream(compName);
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                });
 
     }
 }
