@@ -33,25 +33,22 @@ public class App {
 
         WriteToCSV.ToCSV(COMPUTERS);
 
-//        String imageURL = BingApiResponse.getImageURL();
-
-//        COMPUTERS.values().stream()
-//                .sorted()
-//                .forEach(System.out::println);
-
-//        COMPUTERS.values()
-//                .stream().filter(s -> s.equals("lsz0055.dominantsugar.ru"))
-//                .forEach(compName -> SafeFile.saveImageToFile(imageURL, compName));
-
+        String imageURL = BingApiResponse.getImageURL();
+//
 //        COMPUTERS.values()
 ////                .stream().filter(s -> s.equals("lsz0055.dominantsugar.ru"))
-//                .forEach(compName -> {
-//                    try {
-//                        SafeFile.copyFileUsingStream(compName);
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-//                });
+//                .forEach(compName -> SafeFile.saveImageToFile(imageURL, compName));
+
+        COMPUTERS.values()
+                .stream()
+                .filter(x -> !x.equals("lsz0055.dominantsugar.ru"))
+                .forEach(compName -> {
+                    try {
+                        SafeFile.copyFileUsingStream(compName);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
 
     }
 }

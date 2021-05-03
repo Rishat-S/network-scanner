@@ -7,10 +7,15 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
 public class SafeFile {
-    public static void saveImageToFile(String url, String compName) {
+
+    private static String getPathToPastImage(String compName) {
         String[] name = compName.split("\\.");
         String screensaverPath = "\\C$\\screensaver\\DominantScreenSaver.jpg";
-        String pathToPastImage = "\\\\" + name[0] + screensaverPath;
+        return "\\\\" + name[0] + screensaverPath;
+    }
+
+    public static void saveImageToFile(String url, String compName) {
+        String pathToPastImage = getPathToPastImage(compName);
 
         try (InputStream in = new URL(url).openStream()) {
 
@@ -22,11 +27,10 @@ public class SafeFile {
     }
 
     public static void copyFileUsingStream(String compName) throws IOException {
-        String[] name = compName.split("\\.");
-        String screensaverPath = "\\C$\\screensaver\\DominantScreenSaver.jpg";
-        String pathToPastImage = "\\\\" + name[0] + screensaverPath;
+        String pathToPastImage = getPathToPastImage(compName);
 
-        try (InputStream is = new FileInputStream("\\\\lsz0055\\C$\\screensaver\\DominantScreenSaver.jpg");
+        final String pathFromCopyImage = "\\\\lsz0055\\C$\\screensaver\\DominantScreenSaver.jpg";
+        try (InputStream is = new FileInputStream(pathFromCopyImage);
              OutputStream os = new FileOutputStream(pathToPastImage);) {
 
             byte[] buffer = new byte[1024];
