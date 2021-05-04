@@ -1,23 +1,43 @@
 package ru.lsz;
 
-import java.io.IOException;
+import ru.lsz.bingAPI.GetURL;
 import ru.lsz.netsearch.RunSearch;
+import ru.lsz.safefile.SafeFile;
 import ru.lsz.safefile.WriteToCSV;
-import java.lang.instrument.UnmodifiableClassException;
+
+import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
-import ru.lsz.safefile.SafeFile;
 
 public class App {
 
-    public static final Map<String, String> COMPUTERS = new ConcurrentHashMap<String, String>();
-    public static final String[] HOSTS = new String[]{"192.168.70", "192.168.170"};
-    public static final int THREAD_COUNT = 50;
-    public static final int TIMEOUT = 35;
+    public static final Map<String, String> COMPUTERS = new ConcurrentHashMap<>();
+    private static final String[] HOSTS = new String[]{"192.168.70", "192.168.170"};
+    private static final int THREAD_COUNT = 50;
+    private static final int TIMEOUT = 35;
 
-    public static void main(String[] args) throws InterruptedException, UnmodifiableClassException, IOException {
+    public static void main(String[] args) throws Exception {
 
+        saveImageFromBing();
+
+        searchComputers();
+
+        safeToCSV();
+
+        copyFileToComputers();
+
+    }
+
+    private static void saveImageFromBing() throws Exception {
+        SafeFile.saveImageToFile(GetURL.getURL());
+    }
+
+    private static void safeToCSV() {
+        WriteToCSV.ToCSV(COMPUTERS);
+    }
+
+    private static void searchComputers() throws InterruptedException {
         int index;
         final int range = 250 / THREAD_COUNT;
 
@@ -29,11 +49,11 @@ public class App {
 
         TimeUnit.SECONDS.sleep(TIMEOUT);
 
-        WriteToCSV.ToCSV(COMPUTERS);
-        
+    }
+
+    private static void copyFileToComputers() throws IOException {
         for (Map.Entry<String, String> entry : COMPUTERS.entrySet()) {
             SafeFile.copyFileUsingStream(entry.getValue());
         }
-
     }
 }
