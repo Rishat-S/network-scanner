@@ -8,8 +8,7 @@ import java.nio.file.StandardCopyOption;
 
 public class SafeFile {
 
-//    private static final String SAVER_JPG = "\\\\lsz0055\\C$\\screensaver\\DominantScreenSaver.jpg";
-    private static final String SAVER_JPG = "C:\\1C\\DominantScreenSaver.jpg";
+    public static final String SAVER_JPG = "C:\\1C\\DominantScreenSaver.jpg";
     private static final String SCREEN_SAVER_JPG = "\\C$\\screensaver\\DominantScreenSaver.jpg";
 
     private static String getPathToPastImage(String compName) {
@@ -25,7 +24,8 @@ public class SafeFile {
         }
     }
 
-    public static void copyFileUsingStream(String compName) throws IOException {
+    public static void copyFileUsingStream(String compName) {
+
         String pathToPastImage = getPathToPastImage(compName);
 
         try (InputStream is = new FileInputStream(SAVER_JPG);

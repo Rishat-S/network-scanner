@@ -5,27 +5,26 @@ import ru.lsz.netsearch.RunSearch;
 import ru.lsz.safefile.SafeFile;
 import ru.lsz.safefile.WriteToCSV;
 
-import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.TimeUnit;
 
 public class App {
 
-    public static final Map<String, String> COMPUTERS = new ConcurrentHashMap<>();
+    public static final Map<String, String> DEVICES = new ConcurrentHashMap<>();
     private static final String[] HOSTS = new String[]{"192.168.70", "192.168.170"};
     private static final int THREAD_COUNT = 50;
-    private static final int TIMEOUT = 35;
 
     public static void main(String[] args) throws Exception {
 
         saveImageFromBing();
 
-        searchComputers();
+        for (String host : HOSTS) {
+            searchComputers(host);
+        }
 
         safeToCSV();
 
-        copyFileToComputers();
+//        copyFileToComputers();
 
     }
 
@@ -34,26 +33,32 @@ public class App {
     }
 
     private static void safeToCSV() {
-        WriteToCSV.ToCSV(COMPUTERS);
+        WriteToCSV.ToCSV(DEVICES);
     }
 
-    private static void searchComputers() throws InterruptedException {
+    private static void searchComputers(String host) throws InterruptedException {
         int index;
         final int range = 250 / THREAD_COUNT;
+        Thread[] threads = new Thread[THREAD_COUNT];
 
-        for (String host : HOSTS) {
-            for (index = 0; index < THREAD_COUNT; index++) {
-                new Thread(new RunSearch(host, index * range, (index + 1) * range)).start();
-            }
+        for (index = 0; index < threads.length; index++) {
+            threads[index] = new Thread(new RunSearch(host, index * range, (index + 1) * range));
+            threads[index].start();
         }
 
-        TimeUnit.SECONDS.sleep(TIMEOUT);
+        for (Thread thread : threads) {
+            thread.join();
+        }
 
     }
 
-    private static void copyFileToComputers() throws IOException {
-        for (Map.Entry<String, String> entry : COMPUTERS.entrySet()) {
-            SafeFile.copyFileUsingStream(entry.getValue());
+    private static void copyFileToComputers() {
+        for (Map.Entry<String, String> entry : DEVICES.entrySet()) {
+            if ((entry.getValue().startsWith("lsz")
+                    || entry.getValue().startsWith("LSZ"))
+                    && !entry.getValue().startsWith("lsz-")) {
+                SafeFile.copyFileUsingStream(entry.getValue());
+            }
         }
     }
 }

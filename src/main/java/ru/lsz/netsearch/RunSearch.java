@@ -3,11 +3,9 @@ package ru.lsz.netsearch;
 import java.io.IOException;
 import java.net.InetAddress;
 
-import static ru.lsz.App.COMPUTERS;
+import static ru.lsz.App.DEVICES;
 
 public class RunSearch implements Runnable {
-    public static final String PREFIX_LSZ = "lsz";
-    public static final String PREFIX_LSZ_DASH = "lsz-";
     String hosts;
     int begin;
     int count;
@@ -19,9 +17,7 @@ public class RunSearch implements Runnable {
     }
 
     private void putToMapComputers(String host, String hostName) {
-        if (hostName.startsWith(PREFIX_LSZ) && !hostName.startsWith(PREFIX_LSZ_DASH)) {
-            COMPUTERS.put(host, hostName);
-        }
+            DEVICES.put(host, hostName);
     }
 
     public void checkHosts(String subnet) throws IOException {
@@ -36,6 +32,8 @@ public class RunSearch implements Runnable {
             hostName = address.getHostName();
             if (address.isReachable(timeout)) {
                 putToMapComputers(host, hostName);
+            } else {
+                putToMapComputers(host, "free");
             }
         }
     }

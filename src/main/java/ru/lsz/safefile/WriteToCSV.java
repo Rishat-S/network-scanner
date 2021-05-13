@@ -8,12 +8,12 @@ public class WriteToCSV {
     public static void ToCSV(Map<String, String> networkDevices) {
         PrintWriter pw = null;
         try {
-            pw = new PrintWriter("Comp.csv");
+            pw = new PrintWriter("Devices.csv");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
         StringBuilder builder = new StringBuilder();
-        builder.append("IP,Comp" + "\n");
+        builder.append("IP,NetName" + "\n");
 
         for (Map.Entry<String, String> pair : networkDevices.entrySet()) {
             builder
