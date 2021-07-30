@@ -2,8 +2,8 @@ package ru.lsz;
 
 import ru.lsz.bingAPI.GetURL;
 import ru.lsz.netsearch.RunSearch;
-import ru.lsz.safefile.SafeFile;
-import ru.lsz.safefile.WriteToCSV;
+import ru.lsz.repository.SafeFile;
+import ru.lsz.repository.WriteToCSV;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
