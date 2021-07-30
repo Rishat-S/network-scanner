@@ -1,4 +1,0 @@
-ru/lsz/RunSearch.java
- ru.lsz.RunSearch
-ru/lsz/App.java
- ru.lsz.App
