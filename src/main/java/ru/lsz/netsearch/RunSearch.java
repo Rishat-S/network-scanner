@@ -18,7 +18,11 @@ public class RunSearch implements Runnable {
 
     private void putToMapComputers(String host, String hostName) {
         DEVICES.put(host, hostName);
-        System.out.println(host + ":" + hostName);
+        if (hostName.equals("free")) {
+            System.err.println(host + ":" + hostName);
+        } else {
+            System.out.println(host + ":" + hostName);
+        }
     }
 
     public void checkHosts(String subnet) throws IOException {
