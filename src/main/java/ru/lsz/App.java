@@ -11,7 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class App {
 
     public static final Map<String, String> DEVICES = new ConcurrentHashMap<>();
-    private static final String[] HOSTS = new String[]{"192.168.70", "192.168.170"};
+    private static final String[] HOSTS = {"192.168.70", "192.168.170"};
     private static final int THREAD_COUNT = 50;
 
     public static void main(String[] args) throws Exception {
