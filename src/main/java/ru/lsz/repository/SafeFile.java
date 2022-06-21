@@ -28,8 +28,8 @@ public class SafeFile {
 
         String pathToPastImage = getPathToPastImage(compName);
 
-        try (InputStream is = new FileInputStream(SAVER_JPG);
-             OutputStream os = new FileOutputStream(pathToPastImage);) {
+        try (InputStream is = Files.newInputStream(Paths.get(SAVER_JPG));
+             OutputStream os = Files.newOutputStream(Paths.get(pathToPastImage));) {
 
             byte[] buffer = new byte[1024];
             int length;
